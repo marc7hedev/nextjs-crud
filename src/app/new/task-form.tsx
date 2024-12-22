@@ -18,43 +18,43 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 export function TaskForm() {
     return (
         <Card className="w-[350px]">
             <CardHeader>
-                <CardTitle>Create project</CardTitle>
+                <CardTitle>Crear tarea</CardTitle>
                 <CardDescription>
-                    Deploy your new project in one-click.
+                    Completa el formulario para crear una nueva tarea
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <form>
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="name">Name</Label>
-                            <Input
-                                id="name"
-                                placeholder="Name of your project"
+                            <Label htmlFor="name">Nombre</Label>
+                            <Input id="name" placeholder="Nombre de la tarea" />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="description">Descripción</Label>
+                            <Textarea 
+                                name="description"
+                                id="description" 
+                                placeholder="Descripción" 
                             />
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="framework">Framework</Label>
+                            <Label htmlFor="framework">Prioridad</Label>
                             <Select>
                                 <SelectTrigger id="framework">
-                                    <SelectValue placeholder="Select" />
+                                    <SelectValue placeholder="Seleccionar" />
                                 </SelectTrigger>
                                 <SelectContent position="popper">
-                                    <SelectItem value="next">
-                                        Next.js
-                                    </SelectItem>
-                                    <SelectItem value="sveltekit">
-                                        SvelteKit
-                                    </SelectItem>
-                                    <SelectItem value="astro">Astro</SelectItem>
-                                    <SelectItem value="nuxt">
-                                        Nuxt.js
-                                    </SelectItem>
+                                    <SelectItem value="low">Baja</SelectItem>
+                                    <SelectItem value="medium">Media</SelectItem>
+                                    <SelectItem value="high">Alta</SelectItem>
+                                    <SelectItem value="urgent">Urgente</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -62,8 +62,8 @@ export function TaskForm() {
                 </form>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancel</Button>
-                <Button>Deploy</Button>
+                <Button variant="outline">Cancelar</Button>
+                <Button>Crear</Button>
             </CardFooter>
         </Card>
     );

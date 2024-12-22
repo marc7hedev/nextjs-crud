@@ -1,7 +1,12 @@
-import React from "react";
+import { TaskForm } from "./task-form";
 
 function NewPage() {
-    return <div>NewPage</div>;
+    return (
+        <div>
+            <TaskForm />
+            hola
+        </div>
+    )
 }
 
 export default NewPage;

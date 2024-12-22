@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ModeToggle } from "./theme-toggle-button";
 
 function Navbar() {
@@ -6,7 +7,11 @@ function Navbar() {
             NextActionsCRUD
         </h1>
 
-        <ModeToggle />
+        <div>
+            <Link href="/new">New Task</Link>
+            <ModeToggle />
+        </div>
+
     </nav>;
 }
 

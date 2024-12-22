@@ -1,13 +1,13 @@
 import { ModeToggle } from "./theme-toggle-button";
 
 function Navbar() {
-    return <div>
+    return <nav className="flex justify-between">
         <h1>
             NextActionsCRUD
         </h1>
 
         <ModeToggle />
-    </div>;
+    </nav>;
 }
 
 export default Navbar;

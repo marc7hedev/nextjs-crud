@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ModeToggle } from "./theme-toggle-button";
+import { buttonVariants } from './ui/button';
 
 function Navbar() {
     return <nav className="flex justify-between">
@@ -7,8 +8,11 @@ function Navbar() {
             NextActionsCRUD
         </h1>
 
-        <div>
-            <Link href="/new">New Task</Link>
+        <div className='flex gap-x-2 items-center'>
+            <Link href="/new" 
+                className={buttonVariants({variant: "secondary"})}>
+                    New Task
+                </Link>
             <ModeToggle />
         </div>
 

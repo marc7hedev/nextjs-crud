@@ -12,7 +12,7 @@ import clsx from "clsx";
 
 export function TaskCard({task}: {task: Task}) {
     return (
-        <Card key={task.id}>
+        <Card>
                     <CardHeader className="flex flex-row justify-between">
                         <CardTitle>
                             {task.name}

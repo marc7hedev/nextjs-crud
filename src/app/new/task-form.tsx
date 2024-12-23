@@ -19,15 +19,32 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import prisma from "@/lib/prisma";
+
 
 export function TaskForm() {
     async function createTask(formData: FormData) {
         "use server";
-        const name = formData.get("name");
-        const description = formData.get("description");
-        const priority = formData.get("priority");
+        const name = formData.get("name")?.toString();
+        const description = formData.get("description")?.toString();
+        const priority = formData.get("priority")?.toString();
 
         console.log({ name, description, priority });
+
+        if(!name || !description || !priority) {
+            return;
+        }
+
+        const newTask = await prisma.task.create({
+            data: {
+                name: name,
+                description: description,
+                priority: priority,
+            },
+        })
+        console.log(newTask);
+
+
     }
 
     return (

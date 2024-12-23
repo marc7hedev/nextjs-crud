@@ -20,3 +20,6 @@ model Task {
   updatedAt   DateTime @updatedAt
   
 }
+
+//Ejecutar el esquema prisma:
+//npx prisma migrate dev --name init

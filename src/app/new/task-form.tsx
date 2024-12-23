@@ -20,11 +20,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 
 export function TaskForm() {
     async function createTask(formData: FormData) {
-        "use server";
+        "use server"
         const name = formData.get("name")?.toString();
         const description = formData.get("description")?.toString();
         const priority = formData.get("priority")?.toString();
@@ -43,6 +44,7 @@ export function TaskForm() {
             },
         })
         console.log(newTask);
+        redirect("/");
 
 
     }

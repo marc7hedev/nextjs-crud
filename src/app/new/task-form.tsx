@@ -19,11 +19,16 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createTask } from "@/actions/task-actions";
+import { createTask, updateTask } from "@/actions/task-actions";
+import { Task } from "@prisma/client";
 
-export function TaskForm() {
+export function TaskForm({task}: {task: Task}) {
+
+    const functionAction = task?.id ? updateTask : createTask;
+
     return (
-        <form action={createTask}>
+        <form action={functionAction}>
+            <input type="hidden" name="taskId" value={task?.id} />
             <Card className="w-[350px]">
                 <CardHeader>
                     <CardTitle>Crear tarea</CardTitle>
@@ -39,6 +44,7 @@ export function TaskForm() {
                                 name="name"
                                 id="name"
                                 placeholder="Nombre de la tarea"
+                                defaultValue={task?.name}
                             />
                         </div>
                         <div className="flex flex-col space-y-1.5">
@@ -47,11 +53,13 @@ export function TaskForm() {
                                 name="description"
                                 id="description"
                                 placeholder="Descripción"
+                                defaultValue={task?.description || ""}
                             />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="priority">Prioridad</Label>
-                            <Select name="priority">
+                            <Select name="priority"
+                                defaultValue={task?.priority}>
                                 <SelectTrigger id="priority">
                                     <SelectValue placeholder="Seleccionar" />
                                 </SelectTrigger>

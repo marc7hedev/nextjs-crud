@@ -47,3 +47,7 @@ export async function removeTask(formData: FormData){
     revalidatePath("/");
 
 }
+
+export async function updateTask(formData: FormData){
+    
+}

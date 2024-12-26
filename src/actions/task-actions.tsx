@@ -31,7 +31,6 @@ export async function createTask(formData: FormData) {
 }
 
 export async function removeTask(formData: FormData){
-    "use server";
     const taskId = formData.get("taskId")?.toString();
     
     if(!taskId) {
@@ -49,5 +48,27 @@ export async function removeTask(formData: FormData){
 }
 
 export async function updateTask(formData: FormData){
-    
+    const id = formData.get("id")?.toString();
+    const name = formData.get("name")?.toString();
+    const description = formData.get("description")?.toString();
+    const priority = formData.get("priority")?.toString();
+
+    console.log({ id, name, description, priority });
+
+    if(!id || !name || !description || !priority) {
+        return;
+    }
+
+    await prisma.task.update({
+        where: {
+            id: parseInt(id)
+        },
+        data: {
+            name: name,
+            description: description,
+            priority: priority,
+        },
+    });
+
+    redirect("/");
 }

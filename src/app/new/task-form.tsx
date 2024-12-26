@@ -28,7 +28,7 @@ export function TaskForm({task}: {task: Task}) {
 
     return (
         <form action={functionAction}>
-            <input type="hidden" name="taskId" value={task?.id} />
+            <input type="hidden" name="id" value={task?.id} />
             <Card className="w-[350px]">
                 <CardHeader>
                     <CardTitle>Crear tarea</CardTitle>
@@ -79,7 +79,9 @@ export function TaskForm({task}: {task: Task}) {
                 </CardContent>
                 <CardFooter className="flex justify-between">
                     <Button variant="outline">Cancelar</Button>
-                    <Button type="submit">Crear tarea</Button>
+                    <Button type="submit">
+                        {task?.id ? "Actualizar" : "Crear"}
+                    </Button>
                 </CardFooter>
             </Card>
         </form>

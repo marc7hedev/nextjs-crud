@@ -1,6 +1,4 @@
-import * as React from "react";
-
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -21,9 +19,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { createTask, updateTask } from "@/actions/task-actions";
 import { Task } from "@prisma/client";
+import Link from "next/link";
 
-export function TaskForm({task}: {task: Task}) {
-
+export function TaskForm({ task }: { task: Task }) {
     const functionAction = task?.id ? updateTask : createTask;
 
     return (
@@ -58,8 +56,10 @@ export function TaskForm({task}: {task: Task}) {
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="priority">Prioridad</Label>
-                            <Select name="priority"
-                                defaultValue={task?.priority}>
+                            <Select
+                                name="priority"
+                                defaultValue={task?.priority}
+                            >
                                 <SelectTrigger id="priority">
                                     <SelectValue placeholder="Seleccionar" />
                                 </SelectTrigger>
@@ -78,7 +78,12 @@ export function TaskForm({task}: {task: Task}) {
                     </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                    <Button variant="outline">Cancelar</Button>
+                    <Link
+                        href="/"
+                        className={buttonVariants({ variant: "secondary" })}
+                    >
+                        Cancelar
+                    </Link>
                     <Button type="submit">
                         {task?.id ? "Actualizar" : "Crear"}
                     </Button>

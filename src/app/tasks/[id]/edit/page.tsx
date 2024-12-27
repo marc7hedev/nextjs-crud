@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 export default async function TaskPageEdit({ params }: { params: Promise<{ id: string }> }) {
     // Asegúrate de que params se resuelva correctamente
     const { id } = await params;
-    console.log({ id });
 
     const task = await prisma.task.findFirst({
         where: {

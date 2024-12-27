@@ -10,7 +10,6 @@ export const metadata = {
 
 async function HomePage() {
     const tasks = await prisma.task.findMany();
-    console.log(tasks);
 
     return (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">

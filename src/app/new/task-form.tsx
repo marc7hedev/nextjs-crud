@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
     Card,
@@ -20,6 +22,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { createTask, updateTask } from "@/actions/task-actions";
 import { Task } from "@prisma/client";
 import Link from "next/link";
+import { toast } from "sonner";
+import { showTaskToast } from "@/utils/toastUtils";
 
 export function TaskForm({ task }: { task?: Task }) {
     const functionAction = task?.id ? updateTask : createTask;
@@ -84,7 +88,10 @@ export function TaskForm({ task }: { task?: Task }) {
                     >
                         Cancelar
                     </Link>
-                    <Button type="submit">
+                    <Button
+                        type="submit"
+                        onClick={() => showTaskToast(task)}
+                    >
                         {task?.id ? "Actualizar" : "Crear"}
                     </Button>
                 </CardFooter>

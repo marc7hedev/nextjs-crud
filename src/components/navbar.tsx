@@ -13,6 +13,10 @@ function Navbar() {
         </Link>
 
         <div className='flex gap-x-2 items-center'>
+            <Link href="/list" 
+                className={buttonVariants({variant: "secondary"})}>
+                    Lista
+                </Link>
             <Link href="/new" 
                 className={buttonVariants({variant: "secondary"})}>
                     Nueva tarea

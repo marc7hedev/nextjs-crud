@@ -23,7 +23,6 @@ import { createTask, updateTask } from "@/actions/task-actions";
 import { Task } from "@prisma/client";
 import Link from "next/link";
 import { toast } from "sonner";
-import { showTaskToast } from "@/utils/toastUtils";
 
 export function TaskForm({ task }: { task?: Task }) {
     const functionAction = task?.id ? updateTask : createTask;
@@ -90,7 +89,11 @@ export function TaskForm({ task }: { task?: Task }) {
                     </Link>
                     <Button
                         type="submit"
-                        onClick={() => showTaskToast(task)}
+                        onClick={() => toast(task?.id ? "Actualizado con éxito" : "Creado con éxito", {
+                            description: task
+                                ? `Nombre: ${task.name}\nPrioridad: ${task.priority}`
+                                : "Nueva tarea creada",
+                        })}
                     >
                         {task?.id ? "Actualizar" : "Crear"}
                     </Button>

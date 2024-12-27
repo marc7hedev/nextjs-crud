@@ -23,6 +23,7 @@ export async function createTask(formData: FormData) {
             priority: priority,
         },
     })
+    console.log(newTask);
     redirect("/");
 
 

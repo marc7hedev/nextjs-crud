@@ -23,3 +23,6 @@ model Task {
 
 //Ejecutar el esquema prisma:
 //npx prisma migrate dev --name init
+
+//Después de cambiar el provider de sqlite a postgresql, y colocar la URL correcta en el .env, se ejecuta en la consola:
+//npx prisma db push

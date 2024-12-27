@@ -15,7 +15,7 @@ function Navbar() {
         <div className='flex gap-x-2 items-center'>
             <Link href="/new" 
                 className={buttonVariants({variant: "secondary"})}>
-                    New Task
+                    Nueva tarea
                 </Link>
             <ModeToggle />
         </div>

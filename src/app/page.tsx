@@ -7,6 +7,7 @@ export const metadata = {
     description: "Basic Crud App",
 };
 
+export const dynamic = "force-dynamic";
 
 async function HomePage() {
     const tasks = await prisma.task.findMany();

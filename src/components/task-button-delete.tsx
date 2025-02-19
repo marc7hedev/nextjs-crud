@@ -1,22 +1,34 @@
 "use client"
 
-
-import { toast } from "sonner";
 import { Button } from "./ui/button"
 import { removeTask } from "@/actions/task-actions";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
-export function TaskButtonDelete({taskId}: {taskId: number}) {
+export default function TaskButtonDelete({taskId}: {taskId: number}) {
+    const [isPending, startTransition] = useTransition();
+
+    const handleDelete = async (formData: FormData) => {
+        startTransition(async () => {
+            try {
+                await removeTask(formData);
+                toast.success("Tarea eliminada correctamente");
+            } catch {
+                toast.error("Error al eliminar la tarea");
+            }
+        });
+    };
 
     return (
-        <form action={removeTask}>
-            <input type="hidden" name="taskId" value={taskId}/>
-            <Button variant="destructive"
-            onClick={() => toast.info("Tarea eliminada con éxito")}>
-                Delete
+        <form action={handleDelete}>
+            <input type="hidden" name="taskId" value={taskId} />
+            <Button 
+                type="submit"
+                variant="destructive"
+                disabled={isPending}
+            >
+                {isPending ? "Eliminando..." : "Delete"}
             </Button>
         </form>
     )
 }
-
-export default TaskButtonDelete
-

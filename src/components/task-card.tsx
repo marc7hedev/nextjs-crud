@@ -13,92 +13,79 @@ import TaskButtonDelete from "./task-button-delete";
 import Link from "next/link";
 import { toggleFavorite } from "@/actions/task-actions";
 import { Star } from "lucide-react";
-import { motion } from "framer-motion";
 import { formatDate } from "@/lib/utils";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function TaskCard({task}: {task: Task}) {
+    const [isPending, startTransition] = useTransition();
+
+    const handleFavorite = async (formData: FormData) => {
+        startTransition(async () => {
+            try {
+                await toggleFavorite(formData);
+                toast.success(task.favorite ? "Eliminado de favoritos" : "Añadido a favoritos");
+            } catch {
+                toast.error("Error al actualizar favoritos");
+            }
+        });
+    };
+
     return (
-        <motion.div
-            layout
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 25
-            }}
-        >
-            <Card className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader className="flex flex-row justify-between">
-                    <CardTitle>
-                        {task.name}
-                    </CardTitle>
-                    <div className="flex items-center gap-2">
-                        <form action={toggleFavorite}>
-                            <input type="hidden" name="taskId" value={task.id} />
-                            <Button 
-                                variant="ghost" 
-                                size="icon"
-                                className={clsx(
-                                    "transition-all duration-300 hover:rotate-12", 
-                                    {
-                                        "text-yellow-500 hover:text-yellow-600": task.favorite,
-                                        "text-gray-400 hover:text-gray-500": !task.favorite
-                                    }
-                                )}
-                                type="submit"
-                            >
-                                <Star className={clsx(
-                                    "h-5 w-5", 
-                                    {
-                                        "fill-current animate-pulse": task.favorite,
-                                    }
-                                )} />
-                            </Button>
-                        </form>
-                        <motion.div whileHover={{ scale: 1.05 }}>
-                            <Badge className={
-                                clsx(
-                                    "transition-all duration-300",
-                                    {
-                                        'bg-red-700 text-white hover:bg-red-800': task.priority === 'urgent',
-                                        'bg-red-400 hover:bg-red-500': task.priority === 'high',
-                                        'bg-yellow-500 hover:bg-yellow-600': task.priority === 'medium',
-                                        'bg-green-500 hover:bg-green-600': task.priority === 'low',
-                                    }
-                                )
-                            }>
-                                {task.priority}
-                            </Badge>
-                        </motion.div>
-                    </div>
-                </CardHeader>
-                <CardContent className="transition-all duration-300 group">
-                    <p className="transition-colors duration-300 group-hover:text-black dark:group-hover:text-white">
-                        {task.description}
-                    </p>
-                    <span className="text-slate-600 text-sm transition-colors duration-300 group-hover:text-slate-800 dark:group-hover:text-slate-300">
-                        {formatDate(task.createdAt)}
-                    </span>
-                </CardContent>
-                <CardFooter className="flex gap-x-2 justify-end">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <TaskButtonDelete taskId={task.id}/>
-                    </motion.div>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Link 
-                            href={`/tasks/${task.id}/edit`}
+        <Card className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+            <CardHeader className="flex flex-row justify-between">
+                <CardTitle>
+                    {task.name}
+                </CardTitle>
+                <div className="flex items-center gap-2">
+                    <form action={handleFavorite}>
+                        <input type="hidden" name="taskId" value={task.id} />
+                        <Button 
+                            variant="ghost" 
+                            size="icon"
+                            type="submit"
+                            disabled={isPending}
                             className={clsx(
-                                buttonVariants({variant: "secondary"}),
-                                "hover:shadow-md"
-                            )}    
+                                "transition-all duration-300", 
+                                {
+                                    "text-yellow-500": task.favorite,
+                                    "text-gray-400": !task.favorite
+                                }
+                            )}
                         >
-                            Editar
-                        </Link>
-                    </motion.div>
-                </CardFooter>
-            </Card>
-        </motion.div>
+                            <Star className={clsx(
+                                "h-5 w-5", 
+                                {
+                                    "fill-current": task.favorite,
+                                }
+                            )} />
+                        </Button>
+                    </form>
+                    <Badge className={clsx({
+                        'bg-red-700 text-white': task.priority === 'urgent',
+                        'bg-red-400': task.priority === 'high',
+                        'bg-yellow-500': task.priority === 'medium',
+                        'bg-green-500': task.priority === 'low',
+                    })}>
+                        {task.priority}
+                    </Badge>
+                </div>
+            </CardHeader>
+            <CardContent>
+                <p>{task.description}</p>
+                <span className="text-slate-600 text-sm">
+                    {formatDate(task.createdAt)}
+                </span>
+            </CardContent>
+            <CardFooter className="flex gap-x-2 justify-end">
+                <TaskButtonDelete taskId={task.id} />
+                <Link 
+                    href={`/tasks/${task.id}/edit`}
+                    className={buttonVariants({variant: "secondary"})}
+                >
+                    Editar
+                </Link>
+            </CardFooter>
+        </Card>
     )
 }

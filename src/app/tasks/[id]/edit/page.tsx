@@ -3,13 +3,14 @@ import PageTransition from "@/components/page-transition";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-interface TaskPageEditProps {
+type Props = {
     params: {
         id: string;
     };
+    searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function TaskPageEdit({ params }: TaskPageEditProps) {
+export default async function TaskPageEdit({ params, searchParams }: Props) {
     const task = await prisma.task.findFirst({
         where: {
             id: parseInt(params.id),

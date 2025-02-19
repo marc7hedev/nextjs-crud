@@ -16,6 +16,7 @@ model Task {
   name        String
   description String?
   priority    String @default("low")
+  favorite    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   

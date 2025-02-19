@@ -70,3 +70,32 @@ export async function updateTask(formData: FormData){
 
     redirect("/");
 }
+
+export async function toggleFavorite(formData: FormData) {
+    const taskId = formData.get("taskId")?.toString();
+    
+    if(!taskId) {
+        return;
+    }
+
+    const task = await prisma.task.findUnique({
+        where: {
+            id: parseInt(taskId)
+        }
+    });
+
+    if(!task) {
+        return;
+    }
+
+    await prisma.task.update({
+        where: {
+            id: parseInt(taskId)
+        },
+        data: {
+            favorite: !task.favorite
+        }
+    });
+
+    revalidatePath("/");
+}

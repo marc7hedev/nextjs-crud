@@ -1,10 +1,13 @@
 import { TaskForm } from "./task-form";
+import PageTransition from "@/components/page-transition";
 
 function NewPage() {
     return (
-        <div className="flex justify-center items-center h-screen">
-            <TaskForm />
-        </div>
+        <PageTransition>
+            <div className="flex justify-center items-center h-screen">
+                <TaskForm />
+            </div>
+        </PageTransition>
     )
 }
 

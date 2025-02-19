@@ -1,6 +1,6 @@
-
-import { TaskCard } from "@/components/task-card";
 import prisma from "@/lib/prisma";
+import PageTransition from "@/components/page-transition";
+import TaskList from "@/components/task-list";
 
 export const metadata = {
     title: "marc7System",
@@ -10,14 +10,17 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 async function HomePage() {
-    const tasks = await prisma.task.findMany();
+    const tasks = await prisma.task.findMany({
+        orderBy: [
+            { favorite: 'desc' }, // Primero los favoritos
+            { createdAt: 'asc' }  // Luego por fecha de creación
+        ]
+    });
 
     return (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {tasks.map((task) => (
-                <TaskCard task={task} key={task.id}/>
-            ))}
-        </div>
+        <PageTransition>
+            <TaskList initialTasks={tasks} />
+        </PageTransition>
     );
 }
 

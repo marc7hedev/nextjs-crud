@@ -10,6 +10,7 @@ type Props = {
     searchParams: { [key: string]: string | string[] | undefined };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default async function TaskPageEdit({ params, searchParams }: Props) {
     const task = await prisma.task.findFirst({
         where: {

@@ -54,6 +54,8 @@ export async function updateTask(formData: FormData) {
         return;
     }
 
+    let success = false;
+
     try {
         await prisma.task.update({
             where: {
@@ -65,10 +67,14 @@ export async function updateTask(formData: FormData) {
                 priority: priority,
             },
         });
-
-        redirect("/");
+        success = true;
     } catch (error) {
         console.error('Error updating task:', error);
+    }
+
+    if (success) {
+        revalidatePath('/', 'page');
+        redirect("/");
     }
 }
 

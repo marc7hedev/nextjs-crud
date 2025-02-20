@@ -3,18 +3,17 @@ import PageTransition from "@/components/page-transition";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-type Props = {
-    params: {
+interface PageProps {
+    params: Promise<{
         id: string;
-    };
-    searchParams: { [key: string]: string | string[] | undefined };
+    }>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default async function TaskPageEdit({ params, searchParams }: Props) {
+export default async function TaskPageEdit({ params }: PageProps) {
+    const { id } = await params;
     const task = await prisma.task.findFirst({
         where: {
-            id: parseInt(params.id),
+            id: parseInt(id),
         },
     });
 
